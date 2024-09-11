@@ -1,9 +1,18 @@
-import React from "react";
+import { Link } from "react-router-dom";
 import { Products } from "./../interface/Product";
 
-const Admin = ({ data }: { data: Products[] }) => {
+const Admin = ({
+  data,
+  remove,
+}: {
+  data: Products[];
+  remove: (_id: string | number) => void;
+}) => {
   return (
     <div>
+      <Link to="/add" className="btn btn-primary">
+        Add
+      </Link>
       <table>
         <thead>
           <tr>
@@ -18,16 +27,23 @@ const Admin = ({ data }: { data: Products[] }) => {
         <tbody>
           {data.map((p) => (
             <tr>
-              <td>{p.id}</td>
+              <td>{p._id}</td>
               <td>{p.title}</td>
               <td>{p.price}</td>
               <td>
-                <img src={p.thumbnail} alt="" />
+                <img src={p.thumbnail} alt="" width={150} />
               </td>
               <td>{p.description}</td>
               <td>
-                <button>edit</button>
-                <button>xóa</button>
+                <Link to={`/edit/${p._id}`} className="btn btn-warning">
+                  edit
+                </Link>
+                <button
+                  onClick={() => remove(p._id)}
+                  className="btn btn-danger"
+                >
+                  xóa
+                </button>
               </td>
             </tr>
           ))}
