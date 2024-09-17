@@ -46,9 +46,11 @@ const Admin = () => {
       key: 'action',
       render: (_, record) => (
         <Space size="middle">
-          <button className="text-white border bg-blue-500 py-1 px-4 rounded font-semibold">
-            Edit
-          </button>
+          <Link to={`/admin/products/edit/${record._id}`}>
+            <button className="text-white border bg-blue-500 py-1 px-4 rounded font-semibold">
+              Edit
+            </button>
+          </Link>
           <button
             onClick={() => removeProduct(record._id!)}
             className="text-white border bg-red-500 py-1 px-4 rounded font-semibold"

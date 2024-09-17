@@ -4,11 +4,12 @@ import ProductReducer from '../reducers/ProductReducer';
 import api from '../axios';
 import { useNavigate } from 'react-router-dom';
 import { Products } from './../interface/Product';
+import { toast } from 'react-toastify';
 
 type ProductContextType = {
   state: { products: Products[]; selectedProduct?: Products };
   removeProduct: (_id: string) => void;
-  updateProduct: (data: Products) => void;
+  updateProduct: (data: Products, id: string | undefined) => void;
   create: (data: Products) => void;
   getDetail: (_id: string) => void;
 };
@@ -33,6 +34,7 @@ export const ProductProvider = ({ children }: Children) => {
       if (confirm('Are you sure you want to remove')) {
         await api.delete(`/products/${_id}`);
         dispatch({ type: 'REMOVE_PRODUCTS', payload: _id });
+        toast.success('Deleted product successfully', { autoClose: 200 });
       }
     } catch (error) {
       console.log(error);
@@ -46,16 +48,19 @@ export const ProductProvider = ({ children }: Children) => {
     }
     try {
       const { data } = await api.get(`/products/${id}`);
-      console.log(data);
       dispatch({ type: 'SET_SELECTED_PRODUCT', payload: data });
     } catch (error) {
       console.error('Error fetching product details:', error);
     }
   };
 
-  const updateProduct = async (product: Products) => {
-    const { data } = await api.put(`/products/${product._id}`, product);
+  const updateProduct = async (product: Products, id: string | undefined) => {
+    const { data } = await api.put(`/products/${id}`, product);
+    if (!data) {
+      toast.error('Không thêm đc sản phẩm');
+    }
     dispatch({ type: 'UPDATE_PRODUCTS', payload: data.dataUpdated });
+    toast.success('Cập nhật sản phẩm thành công');
     nav('/admin/products');
   };
 

@@ -1,5 +1,5 @@
 import type { FormProps } from 'antd';
-import { Button, Checkbox, Form, Input } from 'antd';
+import { Button, Checkbox, Form, Input, Select } from 'antd';
 import { toast } from 'react-toastify';
 import api from '../axios';
 import { Link, useNavigate } from 'react-router-dom';
@@ -72,6 +72,14 @@ const Register = () => {
             rules={[{ required: true, message: 'Please input your password!' }]}
           >
             <Input.Password />
+          </Form.Item>
+
+          <Form.Item
+            label="Select"
+            name="Select"
+            rules={[{ required: true, message: 'Please input!' }]}
+          >
+            <Select />
           </Form.Item>
 
           <Form.Item<FieldType>
