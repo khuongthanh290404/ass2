@@ -11,7 +11,7 @@ const Home = () => {
         {state.products.map((product) => (
           <div
             key={product._id}
-            className="product w-56 bg-gray-50 flex-grow-0 flex-shrink-0 w-[calc(25%-1rem)]"
+            className="product bg-gray-50 flex-grow-0 flex-shrink-0 w-[calc(25%-1rem)]"
           >
             <Link to={`/detail/${product._id}`}>
               <img className="w-full h-64" src={product.thumbnail} alt="" />

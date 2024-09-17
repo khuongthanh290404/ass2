@@ -1,10 +1,11 @@
-import axios from "axios";
+import axios from 'axios';
 
 const api = axios.create({
-  baseURL: "http://localhost:8080/api",
+  baseURL: 'http://localhost:8080/api',
   headers: {
-    "Content-Type": "application/json",
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${localStorage.getItem('token')}`
   },
-  timeout: 3000,
+  timeout: 3000
 });
 export default api;

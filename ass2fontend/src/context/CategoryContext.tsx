@@ -22,7 +22,6 @@ export const CategoryProvider = ({ children }: Children) => {
   useEffect(() => {
     (async () => {
       const { data } = await api.get(`/categories`);
-      console.log(data);
       dispatch({ type: 'GET_CATEGORY', payload: data.data });
     })();
   }, []);
