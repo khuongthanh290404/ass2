@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 export const connectDB = async () => {
-  await mongoose.connect("mongodb://localhost:27017/wd18410");
-  console.log("connect");
+  await mongoose.connect('mongodb://127.0.0.1:27017/assigment2_frontend2');
+  console.log('connect');
 };

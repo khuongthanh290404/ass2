@@ -1,9 +1,9 @@
-import React, { Children, createContext, useEffect, useReducer } from "react";
-import { Categorys } from "../interface/Category";
+import React, { Children, createContext, useEffect, useReducer } from 'react';
+import { Categorys } from '../interface/Category';
 // import CategoryRedecer from "../reducers/CategoryReducre";
-import api from "../axios";
-import CategoryReducer from "../reducers/CategoryReducre";
-import { useNavigate } from "react-router-dom";
+import api from '../axios';
+import CategoryReducer from '../reducers/CategoryReducre';
+import { useNavigate } from 'react-router-dom';
 
 type CategoreyContextType = {
   state: { categorys: Categorys[] };
@@ -21,25 +21,26 @@ export const CategoryProvider = ({ children }: Children) => {
   const nav = useNavigate();
   useEffect(() => {
     (async () => {
-      const { data } = await api.get(`/categorys`);
-      dispatch({ type: "GET_CATEGORY", payload: data.data });
+      const { data } = await api.get(`/categories`);
+      console.log(data);
+      dispatch({ type: 'GET_CATEGORY', payload: data.data });
     })();
   }, []);
   const removeCategory = async (_id: string) => {
-    if (confirm("Are you sure you want to remove")) {
-      await api.delete(`/categorys/${_id}`);
-      dispatch({ type: "REMOVE_CATEGORY", payload: _id });
+    if (confirm('Are you sure you want to remove')) {
+      await api.delete(`/categories/${_id}`);
+      dispatch({ type: 'REMOVE_CATEGORY', payload: _id });
     }
   };
   const updateCategory = async (category: Categorys) => {
-    const { data } = await api.put(`/categorys/${category._id}`, category);
-    dispatch({ type: "UPDATE_CATEGORY", payload: data.data });
-    nav("/admin/category");
+    const { data } = await api.put(`/categories/${category._id}`, category);
+    dispatch({ type: 'UPDATE_CATEGORY', payload: data.data });
+    nav('/admin/category');
   };
   const createCategory = async (category: Categorys) => {
-    const { data } = await api.post(`/categorys`, category);
-    dispatch({ type: "ADD_CATEGORY", payload: data.data });
-    nav("/admin/category");
+    const { data } = await api.post(`/categories`, category);
+    dispatch({ type: 'ADD_CATEGORY', payload: data.data });
+    nav('/admin/category');
   };
   return (
     <CategoryContext.Provider

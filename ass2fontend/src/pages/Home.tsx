@@ -1,41 +1,38 @@
-import React, { useContext } from "react";
-import { ProductContext } from "../context/ProductContext";
-import { Link } from "react-router-dom";
+import React, { useContext } from 'react';
+import { ProductContext } from '../context/ProductContext';
+import { Link } from 'react-router-dom';
 
 const Home = () => {
   const { state } = useContext(ProductContext);
 
   return (
-    <div className="container mt-4">
-      <div className="row">
-        {state.products.map((p) => (
-          <div key={p._id} className="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
-            <div className="card h-100 shadow-sm">
-              {/* Image section */}
-              <div className="text-center p-3">
-                <img
-                  src={p.thumbnail}
-                  alt={p.title}
-                  className="card-img-top"
-                  style={{ maxHeight: "300px", objectFit: "cover" }}
-                />
-              </div>
-
-              {/* Product details */}
-              <div className="card-body d-flex flex-column">
-                <h5 className="card-title text-center">{p.title}</h5>
-                <p className="card-text text-center text-muted">
-                  Giá: {p.price} đ
-                </p>
-
-                {/* Call to action button */}
-                <Link
-                  to={`/detail/${p._id}`}
-                  className="btn btn-primary mt-auto w-100"
-                >
-                  Mua ngay
-                </Link>
-              </div>
+    <div className="mx-44 mt-4">
+      <div className="flex flex-wrap gap-4 justify-between">
+        {state.products.map((product) => (
+          <div
+            key={product._id}
+            className="product w-56 bg-gray-50 flex-grow-0 flex-shrink-0 w-[calc(25%-1rem)]"
+          >
+            <Link to={`/detail/${product._id}`}>
+              <img className="w-full h-64" src={product.thumbnail} alt="" />
+            </Link>
+            <p className="title ml-2 font-semibold">{product.title}</p>
+            <p className="description ml-2 text-sm py-1 text-gray-400 ">
+              {product.description?.slice(0, 19)}
+            </p>
+            <p className="price text-lg text-red-500 font-semibold py-2 ml-2">
+              {`${product.price} $`}
+            </p>
+            <div>
+              <button
+                className="border border-black rounded py-2 px-4 ml-3 bg-white hover:text-white hover:bg-black transition-all duration-1000
+         hover:bg-black mr-3"
+              >
+                <i className="fa-regular fa-heart text-black hover:text-white"></i>
+              </button>
+              <button className="mb-2 border border-black font-semibold bg-white rounded text-black py-2 px-10 ml-2 whitespace-nowrap hover:bg-black transition-all duration-1000 hover:text-white ">
+                Add to cart
+              </button>
             </div>
           </div>
         ))}
