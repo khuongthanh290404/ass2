@@ -1,61 +1,48 @@
-import { Link, Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import "./App.css";
-import Admin from "./pages/Admin";
-import { useEffect, useState } from "react";
-import { Products } from "./interface/Product";
-import api from "./axios/index";
-import Add from "./pages/Add";
-import Edit from "./pages/Edit";
+// import Admin from "./pages/Admin/Products/Admin";
+// import { useEffect, useState } from "react";
+// import { Products } from "./interface/Product";
+// import api from "./axios/index";
+import Add from "./pages/Admin/Products/Add";
+import Edit from "./pages/Admin/Products/Edit";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
+// import Header from "./components/layouts/Header";
+import Home from "./pages/Home";
+import LayoutAdmin from "./components/LayoutAdmin";
+import LayoutClient from "./components/LayoutClient";
+import AdminCategory from "./pages/Admin/Category/AdminCategory";
+// import Dashboard from "./pages/Admin/Dashboard";
+// import ProductForm from "./pages/Admin/ProductForm";
+import AddCategory from "./pages/Admin/Category/AddCategory";
+import EditCategory from "./pages/Admin/Category/EditCategory";
+// import Category from "./pages/Admin/Category/AdminCategory";
+import Admin from "./pages/Admin/Products/AdminProduct";
+import ProductDetail from "./pages/ProductDetail";
+import AdminUser from "./pages/Admin/User/AdminUser";
 
 function App() {
-  const nav = useNavigate();
-  const [product, setProducts] = useState<Products[]>([]);
-  const fetAPI = async () => {
-    const { data } = await api.get(`/products`);
-    setProducts(data);
-  };
-  useEffect(() => {
-    fetAPI();
-  }, []);
-  const remove = async (_id: string | number) => {
-    if (confirm("Are you sure you want to remove")) {
-      await api.delete(`/products/${_id}`);
-      fetAPI();
-    }
-  };
-  const onAdd = async (product: Products) => {
-    await api.post(`/products`, product);
-    fetAPI();
-    nav("/");
-  };
-  const onEdit = async (product: Products) => {
-    await api.put(`/products/${product._id}`, product);
-    fetAPI();
-    nav("/");
-  };
   return (
     <>
-      <header>
-        <ul>
-          <li>
-            <Link to="/">Admin</Link>
-          </li>
-          <li>
-            <Link to="/register">Register</Link>
-          </li>
-          <li>
-            <Link to="/login">Login</Link>
-          </li>
-        </ul>
-      </header>
+      {/* <Header /> */}
       <Routes>
-        <Route path="/" element={<Admin data={product} remove={remove} />} />
-        <Route path="/add" element={<Add onAdd={onAdd} />} />
-        <Route path="/edit/:_id" element={<Edit onEdit={onEdit} />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/admin" element={<LayoutAdmin />}>
+          <Route path="/admin/products" element={<Admin />} />
+          <Route path="/admin/products/add" element={<Add />} />
+          <Route path="/admin/products/edit/:id" element={<Edit />} />
+          <Route path="/admin/category" element={<AdminCategory />} />
+          <Route path="/admin/category/add" element={<AddCategory />} />
+          <Route path="/admin/category/edit/:id" element={<EditCategory />} />
+          <Route path="/admin/user" element={<AdminUser />} />
+        </Route>
+
+        <Route path="/" element={<LayoutClient />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/detail/:id" element={<ProductDetail />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+        </Route>
       </Routes>
     </>
   );

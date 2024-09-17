@@ -1,16 +1,144 @@
-table {
-  font-family: arial, sans-serif;
-  border-collapse: collapse;
-  width: 100%;
+/* Reset some default styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-td,
-th {
-  border: 1px solid #dddddd;
-  text-align: left;
-  padding: 8px;
+body {
+  font-family: "Arial", sans-serif;
+  background-color: #f5f5f5;
+  color: #333;
 }
 
-tr:nth-child(even) {
-  background-color: #dddddd;
+/* Header */
+header {
+  background-color: #4caf50;
+  padding: 20px;
+  color: white;
+  text-align: center;
+}
+
+header h1 {
+  font-size: 24px;
+}
+
+header ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+header ul li {
+  display: inline-block;
+  margin-left: 15px;
+}
+
+header ul li a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+header ul li a:hover {
+  text-decoration: underline;
+}
+
+/* Layout styles */
+.row {
+  display: flex;
+  margin: 20px;
+}
+
+.col-3 {
+  width: 25%;
+}
+
+.col-9 {
+  width: 75%;
+}
+
+/* Sidebar */
+.sidebar {
+  background-color: #333;
+  padding: 20px;
+  min-height: 100vh;
+  border-radius: 8px;
+}
+
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.sidebar ul li {
+  margin-bottom: 15px;
+}
+
+.sidebar ul li a {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+  display: block;
+  padding: 10px;
+  background-color: #444;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.sidebar ul li a:hover {
+  background-color: #4caf50;
+}
+
+/* Main content */
+.main {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+/* header */
+
+#header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 80px;
+  background: #e3e3e3;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06);
+  z-index: 999;
+  position: sticky;
+  top: 0;
+  left: 0;
+}
+#navbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#navbar li {
+  list-style: none;
+  padding: 0 20px;
+  position: relative;
+}
+#navbar li a {
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 600;
+  color: #1a1a1a;
+  transition: 0.3s ease;
+}
+#navbar li a:hover,
+#navbar li a.active {
+  color: #088178;
+}
+#navbar li a.active::after,
+#navbar li a:hover::after {
+  /* color: #088178; */
+  content: "";
+  width: 30%;
+  background: #088178;
+  height: 2px;
+  position: absolute;
+  bottom: -4px;
+  left: 20px;
 }
