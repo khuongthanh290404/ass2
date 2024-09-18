@@ -20,13 +20,14 @@ function App() {
     <>
       <Routes>
         <Route path="/admin" element={<LayoutAdmin />}>
+          <Route index element={<Admin />} />
           <Route path="products" element={<Admin />} />
           <Route path="products/add" element={<Add />} />
           <Route path="products/edit/:id" element={<Edit />} />
-          <Route path="category" element={<AdminCategory />} />
-          <Route path="category/add" element={<AddCategory />} />
-          <Route path="category/edit/:id" element={<EditCategory />} />
-          <Route path="user" element={<AdminUser />} />
+          <Route path="categories" element={<AdminCategory />} />
+          <Route path="categories/add" element={<AddCategory />} />
+          <Route path="categories/edit/:id" element={<EditCategory />} />
+          <Route path="users" element={<AdminUser />} />
         </Route>
 
         <Route path="/" element={<LayoutClient />}>

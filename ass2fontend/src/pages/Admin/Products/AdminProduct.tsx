@@ -11,7 +11,8 @@ const Admin = () => {
     {
       title: 'Id',
       dataIndex: '_id',
-      key: '_id'
+      key: '_id',
+      render: (_id) => <a>#{_id.slice(0, 10).toUpperCase()}</a>
     },
     {
       title: 'Name',
@@ -62,7 +63,7 @@ const Admin = () => {
     }
   ];
   return (
-    <div>
+    <>
       <div className="py-4">
         <Link
           to="/admin/products/add"
@@ -71,8 +72,14 @@ const Admin = () => {
           Add Product
         </Link>
       </div>
-      <Table columns={columns} dataSource={state.products} />
-    </div>
+      <Table
+        columns={columns}
+        dataSource={state.products.map((product) => ({
+          ...product,
+          key: product._id
+        }))}
+      />
+    </>
   );
 };
 

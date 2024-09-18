@@ -1,47 +1,64 @@
-import React, { useContext } from "react";
-import { CategoryContext } from "./../../../context/CategoryContext";
-import { Link } from "react-router-dom";
+import { useContext } from 'react';
+import { CategoryContext } from './../../../context/CategoryContext';
+import { Link } from 'react-router-dom';
+import { Space, Table } from 'antd';
+import type { TableProps } from 'antd';
+import { Categorys } from '../../../interface/Category';
 
 const AdminCategory = () => {
   const { state, removeCategory } = useContext(CategoryContext);
-  console.log(state.categorys);
+  const columns: TableProps<Categorys>['columns'] = [
+    {
+      title: 'Id',
+      dataIndex: '_id',
+      key: '_id',
+      render: (_id) => <a>#{_id.slice(0, 10).toUpperCase()}</a>
+    },
+    {
+      title: 'Name',
+      dataIndex: 'title',
+      key: 'title',
+      render: (text) => <a>{text}</a>
+    },
+
+    {
+      title: 'Action',
+      key: 'action',
+      render: (_, record) => (
+        <Space size="middle">
+          <Link to={`/admin/categories/edit/${record._id}`}>
+            <button className="text-white border bg-blue-500 py-1 px-4 rounded font-semibold">
+              Edit
+            </button>
+          </Link>
+          <button
+            onClick={() => removeCategory(record._id)}
+            className="text-white border bg-red-500 py-1 px-4 rounded font-semibold"
+          >
+            Delete
+          </button>
+        </Space>
+      )
+    }
+  ];
   return (
-    <div>
-      <Link to="/admin/category/add" className="btn btn-primary">
-        add category
-      </Link>
-      <table className="table table-striped table table-bordered">
-        <thead>
-          <tr>
-            <th>id</th>
-            <th>title</th>
-            <th>action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {state.categorys.map((p) => (
-            <tr>
-              <td>{p._id}</td>
-              <td>{p.title}</td>
-              <td>
-                <button
-                  onClick={() => removeCategory(p._id)}
-                  className="btn btn-danger"
-                >
-                  xóa
-                </button>
-                <Link
-                  to={`/admin/category/edit/${p._id}`}
-                  className="btn btn-warning"
-                >
-                  edit
-                </Link>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <>
+      <div className="py-4">
+        <Link
+          to="/admin/categories/add"
+          className="text-white font-semibold py-1 px-3 bg-lime-500 text-center inline-block rounded-lg shadow-md hover:bg-gradient-to-r from-lime-500 to-lime-600 transition-colors duration-300"
+        >
+          Add Category
+        </Link>
+      </div>
+      <Table
+        columns={columns}
+        dataSource={state.categorys.map((category) => ({
+          ...category,
+          key: category._id
+        }))}
+      />
+    </>
   );
 };
 

@@ -1,65 +1,59 @@
-import React, { useEffect, useState } from "react";
-import { Users } from "../../../interface/User";
-import api from "../../../axios";
+import { Space, Table } from 'antd';
+import type { TableProps } from 'antd';
+import { Users } from '../../../interface/User';
+import { useContext } from 'react';
+import { AuthContext } from '../../../context/AuthContext';
 
 const AdminUser = () => {
-  const [users, setUsers] = useState<Users[]>([]);
+  const { authState, deleteAuth } = useContext(AuthContext);
+  const columns: TableProps<Users>['columns'] = [
+    {
+      title: 'Id',
+      dataIndex: '_id',
+      key: '_id',
+      render: (_id) => <a>#{_id.slice(0, 10).toUpperCase()}</a>
+    },
+    {
+      title: 'Name',
+      dataIndex: 'username',
+      key: 'username',
+      render: (text) => <a>{text}</a>
+    },
+    {
+      title: 'Email',
+      dataIndex: 'email',
+      key: 'email'
+    },
 
-  // Lấy danh sách người dùng từ API
-  useEffect(() => {
-    fetchUsers();
-  }, []);
-
-  // Hàm gọi API để lấy dữ liệu người dùng
-  const fetchUsers = async () => {
-    const { data } = await api.get(`/user`);
-    setUsers(data);
-  };
-
-  // Hàm xóa người dùng
-  const deleteUser = async (id: string) => {
-    try {
-      // Gửi yêu cầu xóa người dùng
-      await api.delete(`/user/${id}`);
-      // Cập nhật lại danh sách người dùng sau khi xóa
-      setUsers(users.filter((user) => user._id !== id));
-      alert("Xóa người dùng thành công!");
-    } catch (error) {
-      console.error("Xóa người dùng thất bại:", error);
-      alert("Có lỗi xảy ra khi xóa người dùng!");
+    {
+      title: 'Role',
+      dataIndex: 'role',
+      key: 'role'
+    },
+    {
+      title: 'Action',
+      key: 'action',
+      render: (_, record) => (
+        <Space size="middle">
+          <button
+            onClick={() => deleteAuth(record._id!)}
+            className="text-white border bg-red-500 py-1 px-4 rounded font-semibold"
+          >
+            Delete
+          </button>
+        </Space>
+      )
     }
-  };
+  ];
 
   return (
-    <div>
-      <table className="table table-striped table-bordered">
-        <thead>
-          <tr>
-            <th>Username</th>
-            <th>Email</th>
-            <th>Password</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map((p) => (
-            <tr key={p._id}>
-              <td>{p.username}</td>
-              <td>{p.email}</td>
-              <td>{p.password}</td>
-              <td>
-                <button
-                  className="btn btn-danger"
-                  onClick={() => deleteUser(p._id)}
-                >
-                  Xóa
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <Table
+      columns={columns}
+      dataSource={authState.auths.map((auth) => ({
+        ...auth,
+        key: auth._id
+      }))}
+    />
   );
 };
 

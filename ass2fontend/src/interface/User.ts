@@ -7,6 +7,7 @@ export interface Users {
 }
 
 export type State = {
+  auths: Users[];
   user: Users | null;
   token: string | null;
 };
@@ -14,4 +15,6 @@ export type State = {
 export type Action =
   | { type: 'SET_AUTH'; payload: { token: string; user: Users } }
   | { type: 'CHECK_TOKEN' }
-  | { type: 'LOG_OUT' };
+  | { type: 'LOG_OUT' }
+  | { type: 'GET_AUTH'; payload: Users[] }
+  | { type: 'DELETE_AUTH'; payload: string };
