@@ -1,5 +1,5 @@
 import type { FormProps } from 'antd';
-import { Button, Checkbox, Form, Input, Select } from 'antd';
+import { Button, Checkbox, Form, Input } from 'antd';
 import { toast } from 'react-toastify';
 import api from '../axios';
 import { Link, useNavigate } from 'react-router-dom';
@@ -15,7 +15,6 @@ const Register = () => {
   const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
     try {
       const res = await api.post('/register', values);
-      console.log(res);
 
       if (!res) {
         toast.error('Tài khoản hoặc mật khẩu không đúng');
@@ -61,7 +60,10 @@ const Register = () => {
           <Form.Item<FieldType>
             label="Email"
             name="email"
-            rules={[{ required: true, message: 'Please input your email!' }]}
+            rules={[
+              { required: true, message: 'Please input your email!' },
+              { type: 'email', message: 'Email must be in correct format' }
+            ]}
           >
             <Input />
           </Form.Item>
@@ -69,17 +71,12 @@ const Register = () => {
           <Form.Item<FieldType>
             label="Password"
             name="password"
-            rules={[{ required: true, message: 'Please input your password!' }]}
+            rules={[
+              { required: true, message: 'Please input your password!' },
+              { min: 6, message: 'Password must be at least 6 characters' }
+            ]}
           >
             <Input.Password />
-          </Form.Item>
-
-          <Form.Item
-            label="Select"
-            name="Select"
-            rules={[{ required: true, message: 'Please input!' }]}
-          >
-            <Select />
           </Form.Item>
 
           <Form.Item<FieldType>

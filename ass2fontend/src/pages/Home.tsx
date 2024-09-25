@@ -14,7 +14,7 @@ const Home = () => {
             className="product bg-gray-50 flex-grow-0 flex-shrink-0 w-[calc(25%-1rem)]"
           >
             <Link to={`/detail/${product._id}`}>
-              <img className="w-full h-64" src={product.thumbnail} alt="" />
+              <img className="h-64 w-full" src={product.thumbnail} alt="" />
             </Link>
             <p className="title ml-2 font-semibold">{product.title}</p>
             <p className="description ml-2 text-sm py-1 text-gray-400 ">
@@ -23,10 +23,11 @@ const Home = () => {
             <p className="price text-lg text-red-500 font-semibold py-2 ml-2">
               {`${product.price} $`}
             </p>
+
             <div>
               <button
-                className="border border-black rounded py-2 px-4 ml-3 bg-white hover:text-white hover:bg-black transition-all duration-1000
-         hover:bg-black mr-3"
+                className="border border-black rounded py-2 px-4 ml-3 bg-white hover:text-black hover:bg-black transition-all duration-1000
+                   hover:bg-black mr-3"
               >
                 <i className="fa-regular fa-heart text-black hover:text-white"></i>
               </button>

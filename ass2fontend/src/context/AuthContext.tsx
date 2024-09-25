@@ -29,7 +29,7 @@ const AuthProvider = ({ children }: ChildrenProps) => {
   useEffect(() => {
     (async () => {
       try {
-        const res = await api.get('/user');
+        const res = await api.get('/auth/user');
         dispatch({ type: 'GET_AUTH', payload: res.data });
       } catch (error) {
         console.log(error);
@@ -39,7 +39,7 @@ const AuthProvider = ({ children }: ChildrenProps) => {
   }, []);
   const login = async (dataLogin: Users) => {
     try {
-      const res = await api.post('/login', dataLogin);
+      const res = await api.post('/auth/login', dataLogin);
 
       if (!res) {
         toast.error('Tài khoản hoặc mật khẩu không đúng');

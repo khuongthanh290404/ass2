@@ -7,10 +7,10 @@ import {
   update
 } from '../controller/category';
 
-const router = express.Router();
-router.get('/categories', getAll);
-router.get('/categories/:id', getDetail);
-router.post('/categories', create);
-router.put('/categories/:id', update);
-router.delete('/categories/:id', remove);
-export default router;
+const routerCategories = express.Router();
+routerCategories.get('', getAll);
+routerCategories.get('/:id', getDetail);
+routerCategories.post('', create);
+routerCategories.put('/:id', update);
+routerCategories.delete('/:id', remove);
+export default routerCategories;

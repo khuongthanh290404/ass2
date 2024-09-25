@@ -1,24 +1,24 @@
-import express from "express";
-import productRoute from "./router/product";
-import { connectDB } from "./config/db";
-import cors from "cors";
-import authRoute from "./router/auth";
-import categoryRoute from "./router/category";
-import cartRoute from "./router/cart";
+import express from 'express';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import router from './router';
+import { connect } from 'mongoose';
+
+dotenv.config();
 const app = express();
+
 app.use(express.json());
-connectDB();
 app.use(cors());
 const corsOptions = {
-  origin: "*",
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-  credentials: true,
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
 };
 
 app.use(cors(corsOptions));
-app.use("/api", productRoute);
-app.use("/api", authRoute);
-app.use("/api", categoryRoute);
-app.use("/api", cartRoute);
+
+connect('mongodb://127.0.0.1:27017/assigment2_frontend2');
+app.use('/api', router);
+
 export const viteNodeApp = app;
