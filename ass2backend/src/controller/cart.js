@@ -1,4 +1,3 @@
-import { request, response } from "express";
 import Cart from "../model/cart";
 import Product from "../model/product";
 
@@ -6,7 +5,10 @@ export const getAllCart = async (request, response) => {
   try {
     const carts = await Cart.find().populate({
       path: "products",
-      populate: { path: "product", model: Product },
+      populate: {
+        path: "product",
+        model: Product,
+      },
     });
     response.status(200).json(carts);
   } catch (error) {
@@ -21,6 +23,7 @@ export const getCartDetail = async (request, response) => {
     console.log(error);
   }
 };
+
 export const createCart = async (request, response) => {
   try {
     const { quantity, user, product } = request.body;
@@ -41,5 +44,15 @@ export const createCart = async (request, response) => {
     });
   } catch (error) {
     console.log(error);
+  }
+};
+
+export const deleteCart = async (request, response) => {
+  try {
+    const cart = await Cart.findByIdAndDelete(request.params.id);
+    response.status(200).json(cart);
+  } catch (error) {
+    console.log(error);
+    response.status(500).json({ message: "Internal Server Error" });
   }
 };

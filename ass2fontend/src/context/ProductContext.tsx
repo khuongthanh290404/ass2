@@ -4,6 +4,7 @@ import ProductReducer from "../reducers/ProductReducer";
 import api from "../axios";
 import { useNavigate } from "react-router-dom";
 import { Products } from "./../interface/Product";
+import Swal from "sweetalert2";
 
 type ProductContextType = {
   state: { products: Products[]; selectedProduct?: Products };
@@ -33,9 +34,21 @@ export const ProductProvider = ({ children }: Children) => {
       if (confirm("Are you sure you want to remove")) {
         await api.delete(`/products/${_id}`);
         dispatch({ type: "REMOVE_PRODUCTS", payload: _id });
+        Swal.fire({
+          title: " Success",
+          text: "Xóa thành công",
+          icon: "success",
+          confirmButtonText: "OK",
+        });
       }
     } catch (error) {
       console.log(error);
+      Swal.fire({
+        title: " Error",
+        text: "Xóa lỗi",
+        icon: "error",
+        confirmButtonText: "OK",
+      });
     }
   };
 
@@ -46,7 +59,6 @@ export const ProductProvider = ({ children }: Children) => {
     }
     try {
       const { data } = await api.get(`/products/${id}`);
-      console.log(data);
       dispatch({ type: "SET_SELECTED_PRODUCT", payload: data });
     } catch (error) {
       console.error("Error fetching product details:", error);
@@ -54,15 +66,52 @@ export const ProductProvider = ({ children }: Children) => {
   };
 
   const updateProduct = async (product: Products) => {
-    const { data } = await api.put(`/products/${product._id}`, product);
-    dispatch({ type: "UPDATE_PRODUCTS", payload: data.dataUpdated });
-    nav("/admin/products");
+    try {
+      const { data } = await api.put(`/products/${product._id}`, product);
+      dispatch({ type: "UPDATE_PRODUCTS", payload: data.dataUpdated });
+      Swal.fire({
+        title: " Success",
+        text: "Sửa thành công",
+        icon: "success",
+        confirmButtonText: "OK",
+      }).then(() => {
+        nav("/admin/products");
+        location.reload();
+      });
+    } catch (error) {
+      console.log(error);
+      Swal.fire({
+        title: " Error",
+        text: "Có lỗi xảy ra",
+        icon: "error",
+        cancelButtonText: "OK",
+      });
+    }
   };
 
   const create = async (data: Products) => {
-    const res = await api.post(`/products`, data);
-    dispatch({ type: "ADD_PRODUCTS", payload: res.data });
-    nav("/admin/products");
+    try {
+      const res = await api.post(`/products`, data);
+      console.log(res.data);
+      dispatch({ type: "ADD_PRODUCTS", payload: res.data });
+      Swal.fire({
+        title: " Success",
+        text: "Thêm sản phẩm thành công",
+        icon: "success",
+        confirmButtonText: "OK",
+      }).then(() => {
+        nav("/admin/products");
+        location.reload();
+      });
+    } catch (error) {
+      console.log(error);
+      Swal.fire({
+        title: " Error",
+        text: "Có lỗi xảy ra",
+        icon: "error",
+        confirmButtonText: "OK",
+      });
+    }
   };
   return (
     <ProductContext.Provider

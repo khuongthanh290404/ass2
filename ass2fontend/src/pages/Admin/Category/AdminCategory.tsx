@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { CategoryContext } from "./../../../context/CategoryContext";
 import { Link } from "react-router-dom";
 
@@ -21,7 +21,7 @@ const AdminCategory = () => {
         <tbody>
           {state.categorys.map((p) => (
             <tr>
-              <td>{p._id}</td>
+              <td>#{p._id?.substring(0, 8)}</td>
               <td>{p.title}</td>
               <td>
                 <button

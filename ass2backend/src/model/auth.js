@@ -14,6 +14,14 @@ export const authSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    role: {
+      type: String,
+      default: "member",
+    },
+    image: {
+      type: String,
+      required: true,
+    },
   },
   {
     versionKey: false,

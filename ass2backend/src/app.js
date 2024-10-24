@@ -5,6 +5,7 @@ import cors from "cors";
 import authRoute from "./router/auth";
 import categoryRoute from "./router/category";
 import cartRoute from "./router/cart";
+// import commentRoute from "./router/comment";
 const app = express();
 app.use(express.json());
 connectDB();

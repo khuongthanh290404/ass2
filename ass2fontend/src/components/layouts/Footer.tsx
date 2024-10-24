@@ -8,8 +8,7 @@ const Footer = () => {
           <tr>
             <td className="tdfooter bg-secondary text-white">
               <div>
-                {/* <img src="/img/logo dinh tung.png" className="logo" alt="" height="48px"> */}
-                <b>ASM-PH46171</b>
+                <b>ASM-PH46166</b>
                 <p>400 University Drive Suite 200 Coral Gables, FL 33134 USA</p>
               </div>
             </td>
@@ -32,7 +31,7 @@ const Footer = () => {
             <td className="tdfooter bg-secondary text-white">
               <div>
                 <b className="mb-4">Địa chỉ liên lạc</b>
-                <p className="mb-4 mt-4">tungdvph46171@fpt.edu.vn</p>
+                <p className="mb-4 mt-4">thanhktph46166@fpt.edu.vn</p>
                 <p className="mb-4">0123.456.789</p>
                 <p className="mb-4">Nam Từ Liêm, Hà Nội</p>
               </div>

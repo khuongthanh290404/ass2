@@ -5,11 +5,11 @@ export const getAllProducts = async (request, response) => {
   try {
     const data = await Product.find({}).populate("categoryId");
     response.status(200).json(data);
-    console.log(data);
   } catch (error) {
     console.log(error);
   }
 };
+
 export const getProductsById = async (request, response) => {
   try {
     const data = await Product.findById(request.params.id).populate(

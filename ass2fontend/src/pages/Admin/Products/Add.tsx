@@ -1,26 +1,12 @@
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { Products } from "../../../interface/Product";
-import {
-  ProductContext,
-  // ProductContextType,
-} from "../../../context/ProductContext";
+import { ProductContext } from "../../../context/ProductContext";
 import { CategoryContext } from "../../../context/CategoryContext";
 
 const Add = () => {
   const { create } = useContext(ProductContext);
-  const {
-    register,
-    handleSubmit,
-    // formState = { errors },
-  } = useForm<Products>();
-  // const onSubmit = (data: Products) => {
-  //   try {
-  //     addProduct(data);
-  //   } catch (error) {
-  //     console.error("Failed to add product", error);
-  //   }
-  // };
+  const { register, handleSubmit } = useForm<Products>();
   const { state } = useContext(CategoryContext);
   return (
     <div className="container">

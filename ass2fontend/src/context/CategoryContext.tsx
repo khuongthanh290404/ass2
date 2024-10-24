@@ -4,6 +4,7 @@ import { Categorys } from "../interface/Category";
 import api from "../axios";
 import CategoryReducer from "../reducers/CategoryReducre";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 type CategoreyContextType = {
   state: { categorys: Categorys[] };
@@ -26,20 +27,70 @@ export const CategoryProvider = ({ children }: Children) => {
     })();
   }, []);
   const removeCategory = async (_id: string) => {
-    if (confirm("Are you sure you want to remove")) {
-      await api.delete(`/categorys/${_id}`);
-      dispatch({ type: "REMOVE_CATEGORY", payload: _id });
+    try {
+      if (confirm("Are you sure you want to remove")) {
+        await api.delete(`/categorys/${_id}`);
+        dispatch({ type: "REMOVE_CATEGORY", payload: _id });
+        Swal.fire({
+          title: " Success",
+          text: "xóa thành công",
+          icon: "success",
+          confirmButtonText: "OK",
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      Swal.fire({
+        title: " Error",
+        text: "xóa thất bại",
+        icon: "error",
+        confirmButtonText: "OK",
+      });
     }
   };
   const updateCategory = async (category: Categorys) => {
-    const { data } = await api.put(`/categorys/${category._id}`, category);
-    dispatch({ type: "UPDATE_CATEGORY", payload: data.data });
-    nav("/admin/category");
+    try {
+      const { data } = await api.put(`/categorys/${category._id}`, category);
+      dispatch({ type: "UPDATE_CATEGORY", payload: data.data });
+      Swal.fire({
+        title: "Success",
+        text: "Update thành công ",
+        icon: "success",
+        confirmButtonText: "OK",
+      }).then(() => {
+        nav("/admin/category");
+      });
+    } catch (error) {
+      console.log(error);
+      Swal.fire({
+        title: "Error",
+        text: "Update lỗi",
+        icon: "error",
+        confirmButtonText: "OK",
+      });
+    }
   };
   const createCategory = async (category: Categorys) => {
-    const { data } = await api.post(`/categorys`, category);
-    dispatch({ type: "ADD_CATEGORY", payload: data.data });
-    nav("/admin/category");
+    try {
+      const { data } = await api.post(`/categorys`, category);
+      dispatch({ type: "ADD_CATEGORY", payload: data.data });
+      Swal.fire({
+        title: "Success",
+        text: "Thêm thành công",
+        icon: "success",
+        confirmButtonText: "OK,",
+      }).then(() => {
+        nav("/admin/category");
+      });
+    } catch (error) {
+      console.log(error);
+      Swal.fire({
+        title: "Error",
+        text: "Thêm thất bại",
+        icon: "error",
+        confirmButtonText: "OK",
+      });
+    }
   };
   return (
     <CategoryContext.Provider
