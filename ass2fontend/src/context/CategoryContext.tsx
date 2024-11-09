@@ -78,7 +78,7 @@ export const CategoryProvider = ({ children }: Children) => {
         title: "Success",
         text: "Thêm thành công",
         icon: "success",
-        confirmButtonText: "OK,",
+        confirmButtonText: "OK",
       }).then(() => {
         nav("/admin/category");
       });

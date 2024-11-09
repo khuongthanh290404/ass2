@@ -1,13 +1,29 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { ProductContext } from "../context/ProductContext";
 import { Link } from "react-router-dom";
-
+import { Users } from "../interface/User";
+import { Products } from "../interface/Product";
+import { Cart } from "../interface/Cart";
 
 const Home: React.FC = () => {
   const { state } = useContext(ProductContext);
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [searchQuery, setSearchQuery] = useState<string>(""); // Thêm trạng thái để lưu từ khóa tìm kiếm
-
+  const [user, setUser] = useState({} as Users);
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user") || "{}");
+    setUser(user);
+  }, []);
+  const addToCart = (product: Products) => {
+    const cart = JSON.parse(localStorage.getItem("cart") || "[]"); // Use an empty array
+    const index = cart.findIndex((item: Cart) => item._id === product._id);
+    if (index === -1) {
+      cart.push({ ...product, quantity: 1 });
+    } else {
+      cart[index].quantity += 1;
+    }
+    localStorage.setItem("cart", JSON.stringify(cart));
+  };
   // Lấy các danh mục sản phẩm duy nhất
   const categories = Array.from(
     new Set(state.products.map((product) => product.categoryId?.title))
@@ -25,7 +41,7 @@ const Home: React.FC = () => {
 
     return matchesCategory && matchesSearch;
   });
-  
+
   return (
     <div className="container">
       {/* Banner Section */}
@@ -117,7 +133,17 @@ const Home: React.FC = () => {
                       >
                         Xem chi tiết
                       </Link>
-                  
+
+                      <button
+                        className="btn btn-danger"
+                        onClick={
+                          user?.email
+                            ? () => addToCart(product)
+                            : () => alert("Please login to add to cart")
+                        }
+                      >
+                        Add to card
+                      </button>
                     </div>
                   </div>
                 </div>

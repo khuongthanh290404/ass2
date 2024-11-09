@@ -79,6 +79,11 @@ const LayoutAdmin = () => {
                     <i className="fas fa-chart-line me-2"></i> Dashboard
                   </Link>
                 </li>
+                <li className="nav-item">
+                  <Link to="/admin/orders" className="nav-link text-light">
+                    <i className="fas fa-chart-line me-2"></i>Checkout
+                  </Link>
+                </li>
               </ul>
             </div>
           </nav>

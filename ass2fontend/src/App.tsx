@@ -14,6 +14,10 @@ import Admin from "./pages/Admin/Products/AdminProduct";
 import ProductDetail from "./pages/ProductDetail";
 import AdminUser from "./pages/Admin/User/AdminUser";
 import Dasboard from "./pages/Admin/Admin";
+// import Cart from "./pages/Cart";
+import CartPage from "./pages/Cart";
+import CheckoutPage from "./pages/Checkout";
+import AdminOrders from "./pages/Admin/AdminCheckout";
 // import CartPage from "./pages/Cart";
 function App() {
   return (
@@ -27,14 +31,16 @@ function App() {
           <Route path="/admin/category/add" element={<AddCategory />} />
           <Route path="/admin/category/edit/:id" element={<EditCategory />} />
           <Route path="/admin/user" element={<AdminUser />} />
-          <Route path="/admin/dasboard" element={<Dasboard/>}/>
+          <Route path="/admin/dasboard" element={<Dasboard />} />
+          <Route path="/admin/orders" element={<AdminOrders />} />
         </Route>
 
         <Route path="/" element={<LayoutClient />}>
           <Route path="/" element={<Home />} />
           <Route path="/detail/:id" element={<ProductDetail />} />
-          {/* <Route path="/cart" element={<CartPage />} /> */}
+          <Route path="/cart" element={<CartPage />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/checkout" element={<CheckoutPage />} />
         </Route>
         <Route path="/login" element={<Login />} />
       </Routes>
